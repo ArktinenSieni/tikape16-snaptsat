@@ -18,6 +18,9 @@
         <ul>
             <li th:each="tsat: ${tsats}">
                 <span th:text="${tsat.id}">1</span> <span th:text="${tsat.text}">chatviesti</span>
+                <form method="POST" th:action="@{~/s/tsats/{id}/like(id=${tsat.id})}">
+                    <input type="submit" value="Diggaa!"/>
+                </form>
             </li>
         </ul>
 
