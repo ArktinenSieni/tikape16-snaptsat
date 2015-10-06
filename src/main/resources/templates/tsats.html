@@ -1,0 +1,25 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Snaptsat</title>
+        <meta charset="utf-8" /> 
+    </head>
+
+    <body>
+        <h1>Hello <span th:text="${user.name}">template user</span></h1>
+
+        <form method="POST" action="/s/tsats">
+            Chat message:<br/>
+            <input type="text" name="message"/><br/>
+            <input type="submit" value="Add noise!"/>
+        </form>
+
+        <ul>
+            <li th:each="tsat: ${tsats}">
+                <span th:text="${tsat.id}">1</span> <span th:text="${tsat.text}">chatviesti</span>
+            </li>
+        </ul>
+
+    </body>
+</html>
