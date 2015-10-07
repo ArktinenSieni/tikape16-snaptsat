@@ -56,7 +56,7 @@ public class Main {
             // NB! use "tsats" as the name for the messages
             
             
-            return new ModelAndView(map, "index");
+            return new ModelAndView(map, "tsats");
         }, new ThymeleafTemplateEngine());
 
         
