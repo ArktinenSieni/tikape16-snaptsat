@@ -40,7 +40,8 @@ public class Main {
             return "";
         });
 
-        // all the following requests will go through a filter, that will
+        // all the requests to /s/* will go through a filter, 
+        // that determines whether the user is logged in or not
         before((req, res) -> {
             if(!req.url().contains("/s/")) {
                 return;
