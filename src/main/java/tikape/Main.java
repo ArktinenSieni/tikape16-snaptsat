@@ -62,13 +62,13 @@ public class Main {
         
         post("/s/tsats", (req, res) -> {
             HashMap map = new HashMap<>();
+            User loggedUser = (User) req.session(true).attribute("user");
             
             // TODO: add a new chat message
             // see from "tsats.html" to figure out what the parameters
             // are called
-
             
-            res.redirect("/s/users/" + req.session(true).attribute("user"));
+            res.redirect("/s/users/" + loggedUser.getId());
             return "";
         });
 
