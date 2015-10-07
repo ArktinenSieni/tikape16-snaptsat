@@ -2,9 +2,9 @@ package tikape;
 
 import java.util.HashMap;
 import spark.ModelAndView;
+import spark.Session;
 import static spark.Spark.before;
 import static spark.Spark.get;
-import static spark.Spark.halt;
 import static spark.Spark.post;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.database.Database;
@@ -41,8 +41,14 @@ public class Main {
         });
 
         // all the following requests will go through a filter, that will
-        before("/s*", (req, res) -> {
-            if (req.session(true).attribute("user") == null) {
+        before((req, res) -> {
+            if(!req.url().contains("/s/")) {
+                return;
+            }
+            
+            Session sess = req.session(true);
+            if (sess.attribute("user") == null) {
+                sess.invalidate();
                 res.redirect("/");
             }
         });
