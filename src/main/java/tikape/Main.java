@@ -47,7 +47,7 @@ public class Main {
                 return;
             }
             
-            Session sess = req.session(true);
+            Session sess = req.session();
             if (sess.attribute("user") == null) {
                 sess.invalidate();
                 res.redirect("/");
@@ -69,7 +69,7 @@ public class Main {
         
         post("/s/tsats", (req, res) -> {
             HashMap map = new HashMap<>();
-            User loggedUser = (User) req.session(true).attribute("user");
+            User loggedUser = (User) req.session().attribute("user");
             
             // TODO: add a new chat message
             // see from "tsats.html" to figure out what the parameters
