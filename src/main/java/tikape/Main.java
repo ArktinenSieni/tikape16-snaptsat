@@ -8,7 +8,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.database.Database;
+import tikape.database.TsatDao;
 import tikape.database.UserDao;
+import tikape.pojo.Tsat;
 import tikape.pojo.User;
 
 public class Main {
@@ -18,6 +20,7 @@ public class Main {
         database.setDebugMode(true);
 
         UserDao userDao = new UserDao(database);
+        TsatDao tsatDao = new TsatDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -59,6 +62,7 @@ public class Main {
             HashMap map = new HashMap<>();
             map.put("user", userDao.findOne(Integer.parseInt(req.params(":id"))));
 
+            map.put("tsats", tsatDao.findlastTenMessages());
             // get 10 chat messages and add them to the map
             // NB! use "tsats" as the name for the messages
             
@@ -70,10 +74,11 @@ public class Main {
         post("/s/tsats", (req, res) -> {
             HashMap map = new HashMap<>();
             User loggedUser = (User) req.session().attribute("user");
+            String text = req.queryParams("message");
             
-            // TODO: add a new chat message
-            // see from "tsats.html" to figure out what the parameters
-            // are called
+            Tsat tsat = new Tsat(text, loggedUser.getUsername());
+            
+            tsatDao.save(tsat);
             
             res.redirect("/s/users/" + loggedUser.getId());
             return "";

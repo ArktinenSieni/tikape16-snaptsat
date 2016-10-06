@@ -24,8 +24,13 @@ public class UserDao implements Dao<User, Integer> {
     }
 
     public User findByUsernameAndPassword(String username, String password) throws SQLException {
-        // TODO: implement
-        return null;
+        List<User> users = this.database.queryAndCollect("SELECT * FROM User WHERE username = ? AND password = ?", new UserCollector(), username, password);
+        
+        if (users.isEmpty()) {
+            return null;
+        }
+        
+        return users.get(0);
     }
 
     @Override
